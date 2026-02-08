@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	title: 'ValQ',
+	title: 'ValQ-Morenikeji',
 	description: 'Specially created for Morenikeji',
 };
 

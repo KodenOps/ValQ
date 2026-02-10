@@ -51,6 +51,10 @@ export default function ValentinePage() {
 	const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 	const [soundEnabled, setSoundEnabled] = useState(false);
 	const [pos, setPos] = useState({ x: '50%', y: '50%' });
+	const [showReplyModal, setShowReplyModal] = useState(false);
+	const [replyMessage, setReplyMessage] = useState('');
+
+	const YOUR_WHATSAPP_NUMBER = '2349042542863';
 
 	const memeRef = useRef<HTMLAudioElement | null>(null);
 	const yesRef = useRef<HTMLAudioElement | null>(null);
@@ -96,7 +100,7 @@ export default function ValentinePage() {
 			memeRef.current.src = sound;
 			memeRef.current.currentTime = 0;
 
-			memeRef.current.play().catch(() => {}); // silent fail (browser policy)
+			memeRef.current.play().catch(() => {});
 		}
 	}
 
@@ -104,6 +108,37 @@ export default function ValentinePage() {
 		setAccepted(true);
 		bgRef.current?.pause();
 		yesRef.current?.play().catch(() => {});
+	}
+
+	function openReplyModal() {
+		setShowReplyModal(true);
+	}
+
+	function closeReplyModal() {
+		setShowReplyModal(false);
+		setReplyMessage('');
+	}
+
+	function sendToWhatsApp() {
+		if (!replyMessage.trim()) {
+			alert('Please write a message first! 💕');
+			return;
+		}
+
+		// Format the message for WhatsApp
+		const message = encodeURIComponent(
+			`💕 Valentine's Proposal Reply 💕\n\n${replyMessage}`,
+		);
+
+		// Create WhatsApp URL
+		const whatsappUrl = `https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=${message}`;
+
+		// Open WhatsApp in new tab
+		window.open(whatsappUrl, '_blank');
+
+		// Close modal and show thank you
+		closeReplyModal();
+		alert('Thank you my love! 💖 Opening WhatsApp...');
 	}
 
 	return (
@@ -130,6 +165,39 @@ export default function ValentinePage() {
 						className='px-12 py-6 bg-pink-500 text-white rounded-3xl text-2xl font-bold animate-pulse'>
 						💖 Tap to start 💖
 					</button>
+				</div>
+			)}
+
+			{/* REPLY MODAL */}
+			{showReplyModal && (
+				<div className='fixed inset-0 z-[9998] bg-black/70 flex items-center justify-center p-4'>
+					<motion.div
+						initial={{ scale: 0.8, opacity: 0 }}
+						animate={{ scale: 1, opacity: 1 }}
+						className='bg-white rounded-3xl p-8 max-w-lg w-full shadow-2xl'>
+						<h2 className='text-2xl font-bold text-pink-600 mb-4 text-center'>
+							Send me your reply 💌
+						</h2>
+						<textarea
+							value={replyMessage}
+							onChange={(e) => setReplyMessage(e.target.value)}
+							placeholder='Type your sweet message here...'
+							className='w-full h-40 p-4 border-2 border-pink-300 rounded-2xl resize-none focus:outline-none focus:border-pink-500 text-gray-800'
+							autoFocus
+						/>
+						<div className='flex gap-4 mt-6'>
+							<button
+								onClick={closeReplyModal}
+								className='text-sm h-12 px-6 py-3 bg-gray-300 text-gray-700 rounded-2xl font-bold hover:bg-gray-400 transition'>
+								Cancel
+							</button>
+							<button
+								onClick={sendToWhatsApp}
+								className=' w-full h-12 text-[14px] px-2 py-3 bg-pink-500 text-white rounded-2xl font-bold hover:bg-pink-600 transition shadow-lg'>
+								Send to WhatsApp
+							</button>
+						</div>
+					</motion.div>
 				</div>
 			)}
 
@@ -208,7 +276,7 @@ export default function ValentinePage() {
 								animate={{ scale: 1, opacity: 1 }}
 								className='bg-white/90 p-12 rounded-3xl shadow-2xl text-center max-w-md'>
 								<h1 className='text-2xl font-extrabold text-pink-600 mb-4'>
-									Yayyyyy 💖🥹
+									Yayyyyy 💖💘
 								</h1>
 								<p className='text-xl text-slate-950'>
 									I'm so happy you said yes! I promise to always make you smile
@@ -218,8 +286,10 @@ export default function ValentinePage() {
 									ahead! Cheers to unending love, laughter, and happily ever
 									after!
 								</p>
-								<button className='px-6 py-3 bg-pink-500 text-white rounded-2xl font-bold shadow-lg mt-4'>
-									Click to Reply
+								<button
+									onClick={openReplyModal}
+									className='px-6 py-3 bg-pink-500 text-white rounded-2xl font-bold shadow-lg mt-4 hover:bg-pink-600 transition'>
+									Want to Reply? Send me a message! 💌
 								</button>
 							</motion.div>
 						)}

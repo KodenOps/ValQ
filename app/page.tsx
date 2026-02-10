@@ -3,6 +3,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Confetti from 'react-confetti';
+import image_1 from '@/public/image/2.jpg';
+const romantic = new URL('./sounds/romantic.mp3', import.meta.url).href;
+const yesSound = new URL('./sounds/Carry-Me-Dey-Go.mp3', import.meta.url).href;
 
 const memeSounds = [
 	new URL('./sounds/you-think-say-you-dey-wise.mp3', import.meta.url).href,
@@ -24,91 +27,111 @@ const memeSounds = [
 	new URL('./sounds/E-shock-you-broda-shaggi.mp3', import.meta.url).href,
 	new URL('./sounds/Continue.mp3', import.meta.url).href,
 	new URL('./sounds/Chai-There-Is-God-O.mp3', import.meta.url).href,
-	// new URL('./sounds/Carry-Me-Dey-Go.mp3', import.meta.url).href,
 	new URL('./sounds/Apostle-Would-Hear-Of-This.mp3', import.meta.url).href,
 	new URL('./sounds/Adult-Laugh.mp3', import.meta.url).href,
 	new URL('./sounds/70-years-old-man.mp3', import.meta.url).href,
 ];
 
+const loveCards = [
+	{ image: image_1, text: 'I love your smile 😍' },
+	{ image: image_1, text: 'You inspire me everyday ✨' },
+	{ image: image_1, text: 'Your kindness melts my heart 🥹' },
+	{ image: image_1, text: 'You make my bad days better 💖' },
+	{ image: image_1, text: 'You are my safe place 🏡' },
+	{ image: image_1, text: 'Life feels easier with you ❤️' },
+	{ image: image_1, text: 'You understand me deeply 💫' },
+	{ image: image_1, text: 'You make me laugh endlessly 😂' },
+	{ image: image_1, text: 'You bring me peace 🕊️' },
+	{ image: image_1, text: 'You are my forever 💍' },
+];
+
 export default function ValentinePage() {
-	const [pos, setPos] = useState({ x: 0, y: 0 });
+	const [step, setStep] = useState(0);
 	const [accepted, setAccepted] = useState(false);
 	const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+	const [soundEnabled, setSoundEnabled] = useState(false);
+	const [pos, setPos] = useState({ x: '50%', y: '50%' });
+
 	const memeRef = useRef<HTMLAudioElement | null>(null);
-	const bgRef = useRef<HTMLAudioElement | null>(null);
 	const yesRef = useRef<HTMLAudioElement | null>(null);
+	const bgRef = useRef<HTMLAudioElement | null>(null);
 
 	useEffect(() => {
 		setDimensions({ width: window.innerWidth, height: window.innerHeight });
-
-		function onResize() {
+		const resize = () =>
 			setDimensions({ width: window.innerWidth, height: window.innerHeight });
-		}
-
-		window.addEventListener('resize', onResize);
-
-		return () => window.removeEventListener('resize', onResize);
+		window.addEventListener('resize', resize);
+		return () => window.removeEventListener('resize', resize);
 	}, []);
 
-	// Deterministic heart positions and timings so server and client markup match
-	const heartConfig = Array.from({ length: 20 }).map((_, i) => {
-		// left: deterministic percent based on index
-		const leftPercent = (i * 73) % 100; // pseudo-random-looking but deterministic
-		const duration = 6 + (i % 4) * 1.2;
-		const delay = (i % 5) * 0.6;
-		return { left: `${leftPercent}%`, duration, delay };
-	});
+	function enableSound() {
+		if (!bgRef.current) return;
+		bgRef.current.volume = 0.6;
+		bgRef.current.play().catch(() => {});
+		setSoundEnabled(true);
+	}
 
-	function moveNoButton(shouldPlay = false) {
-		const x = Math.floor(Math.random() * 500 - 250);
-		const y = Math.floor(Math.random() * 400 - 200);
-		setPos({ x, y });
+	function nextStep() {
+		setStep((s) => Math.min(s + 1, 10));
+	}
 
-		if (!memeSounds || memeSounds.length === 0) return;
+	function moveNoButton() {
+		const container = document.getElementById('no-btn-container');
+		const button = document.getElementById('no-btn');
+		if (!container || !button) return;
 
-		const randomSound =
-			memeSounds[Math.floor(Math.random() * memeSounds.length)];
+		const c = container.getBoundingClientRect();
+		const b = button.getBoundingClientRect();
+
+		const x = Math.random() * (c.width - b.width);
+		const y = Math.random() * (c.height - b.height);
+
+		setPos({ x: `${x}px`, y: `${y}px` });
+
+		// 🔊 PLAY RANDOM MEME SOUND
 		if (memeRef.current) {
-			// set src to a new random sound
-			memeRef.current.src = randomSound;
-			// reset playback so new clip starts fresh when played
-			try {
-				memeRef.current.pause();
-				memeRef.current.currentTime = 0;
-			} catch (e) {
-				/* ignore if not supported */
-			}
-			if (shouldPlay) {
-				// play() returns a promise in modern browsers — catch rejections
-				const p = memeRef.current.play?.();
-				if (p && typeof p.catch === 'function') p.catch(() => {});
-			}
+			const sound = memeSounds[Math.floor(Math.random() * memeSounds.length)];
+
+			memeRef.current.pause();
+			memeRef.current.src = sound;
+			memeRef.current.currentTime = 0;
+
+			memeRef.current.play().catch(() => {}); // silent fail (browser policy)
 		}
 	}
 
 	function handleYes() {
 		setAccepted(true);
-		// play the 'Carry-Me-Dey-Go' clip on user gesture, then start background music
-		if (yesRef.current) {
-			const p = yesRef.current.play?.();
-			if (p && typeof p.catch === 'function') p.catch(() => {});
-		}
-		const bgPlay = bgRef.current?.play?.();
-		if (bgPlay && typeof bgPlay.catch === 'function') bgPlay.catch(() => {});
+		bgRef.current?.pause();
+		yesRef.current?.play().catch(() => {});
 	}
 
 	return (
-		<main className='relative min-h-screen flex items-center justify-center bg-linear-to-br from-pink-300 via-red-300 to-rose-400 overflow-hidden'>
-			<audio ref={memeRef} />
+		<div className='relative min-h-screen overflow-hidden bg-linear-to-br from-pink-300 via-red-300 to-rose-400'>
+			<audio
+				ref={memeRef}
+				preload='auto'
+			/>
 			<audio
 				ref={yesRef}
-				src={new URL('./sounds/Carry-Me-Dey-Go.mp3', import.meta.url).href}
+				src={yesSound}
 			/>
 			<audio
 				ref={bgRef}
-				src='/sounds/romantic.mp3'
+				src={romantic}
 				loop
 			/>
+
+			{/* SOUND UNLOCK */}
+			{!soundEnabled && (
+				<div className='fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center'>
+					<button
+						onClick={enableSound}
+						className='px-12 py-6 bg-pink-500 text-white rounded-3xl text-2xl font-bold animate-pulse'>
+						💖 Tap to start 💖
+					</button>
+				</div>
+			)}
 
 			{accepted && (
 				<Confetti
@@ -117,133 +140,82 @@ export default function ValentinePage() {
 				/>
 			)}
 
-			{/* Floating hearts */}
-			<div className='absolute inset-0 pointer-events-none overflow-hidden'>
-				{heartConfig.map((cfg, i) => (
+			<AnimatePresence mode='wait'>
+				{/* LOVE CARDS */}
+				{step < 10 && (
 					<motion.div
-						key={i}
-						initial={{ y: '110%', opacity: 0 }}
-						animate={{ y: '-10%', opacity: 1 }}
-						transition={{
-							duration: cfg.duration,
-							repeat: Infinity,
-							delay: cfg.delay,
+						key={step}
+						initial={{ y: '100%' }}
+						animate={{ y: 0 }}
+						exit={{ y: '-100%' }}
+						transition={{ duration: 0.6, ease: 'easeInOut' }}
+						drag='y'
+						dragConstraints={{ top: 0, bottom: 0 }}
+						onDragEnd={(e, info) => {
+							if (info.offset.y < -120) nextStep();
 						}}
-						className='absolute text-3xl'
-						style={{ left: cfg.left }}>
-						💖
-					</motion.div>
-				))}
-			</div>
+						className='absolute inset-0 flex items-center justify-center'>
+						<div
+							className='absolute inset-0 object-cover bg-cover bg-center'
+							style={{ backgroundImage: `url(${loveCards[step].image.src})` }}
+						/>
+						<div className='absolute inset-0 bg-black/40' />
 
-			<AnimatePresence>
-				{!accepted ? (
+						<h1 className='relative z-10 text-white text-4xl font-bold text-center px-6 drop-shadow-lg'>
+							{loveCards[step].text}
+						</h1>
+
+						<div className='absolute bottom-10 text-white text-sm animate-bounce'>
+							⬆ Swipe up
+						</div>
+					</motion.div>
+				)}
+
+				{/* PROPOSAL */}
+				{step === 10 && (
 					<motion.div
+						key='proposal'
 						initial={{ scale: 0.8, opacity: 0 }}
 						animate={{ scale: 1, opacity: 1 }}
-						exit={{ scale: 0.8, opacity: 0 }}
-						className='bg-white/90 backdrop-blur p-10 rounded-3xl shadow-2xl text-center max-w-md w-full relative'>
-						<h1 className='text-4xl font-bold text-pink-600 mb-6'>
-							Will you be my Valentine? 💘
-						</h1>
+						className='flex items-center justify-center min-h-screen'>
+						{!accepted ? (
+							<div className='bg-white/90 p-10 rounded-3xl shadow-2xl text-center max-w-md'>
+								<h1 className='text-2xl font-bold text-pink-600 mb-6'>
+									Dear Morenikeji, Will you be my Valentine? 💘
+								</h1>
 
-						<p className='text-gray-600 mb-8'>
-							Choose wisely 😏 One option may be unavailable...
-						</p>
-
-						<div className='flex justify-center gap-6 mt-6 relative h-24'>
-							<button
-								onClick={handleYes}
-								className='px-8 py-4 bg-pink-500 hover:bg-pink-600 active:scale-95 transition text-white rounded-2xl font-bold text-lg shadow-lg'>
-								Yes 💕
-							</button>
-
-							<motion.button
-								animate={{ x: pos.x, y: pos.y }}
-								transition={{ type: 'spring', stiffness: 300, damping: 15 }}
-								onClick={() => moveNoButton(true)}
-								className='px-8 py-4 bg-gray-300 text-gray-700 rounded-2xl font-bold text-lg shadow-lg absolute'>
-								No 😈
-							</motion.button>
-						</div>
-
-						<p className='text-sm text-gray-500 mt-8'>
-							Try pressing “No” — if you can 😌
-						</p>
-					</motion.div>
-				) : (
-					<motion.div
-						initial={{ scale: 0.6, opacity: 0 }}
-						animate={{ scale: 1, opacity: 1 }}
-						className='bg-white/90 backdrop-blur p-12 rounded-3xl shadow-2xl text-center max-w-md w-full'>
-						<h1 className='text-5xl font-extrabold text-pink-600 mb-4'>
-							Yayyyyy 💖🥹
-						</h1>
-						<p className='text-xl text-gray-700 mb-6'>
-							Best decision of your life 😌
-						</p>
-
-						<motion.div
-							initial={{ scale: 0 }}
-							animate={{ scale: 1 }}
-							transition={{ delay: 0.3, type: 'spring', stiffness: 200 }}
-							className='text-6xl'>
-							💍💘💖
-						</motion.div>
-
-						<p className='mt-8 text-gray-600'>
-							See you on our Valentine date 😏
-						</p>
+								<div
+									id='no-btn-container'
+									className=' h-32 flex flex-col justify-center'>
+									<motion.button
+										id='no-btn'
+										onClick={moveNoButton}
+										style={{ left: pos.x, top: pos.y }}
+										animate={{ left: pos.x, top: pos.y }}
+										className='absolute w-1/2 h-20 px-6 py-3 bg-gray-300 rounded-2xl font-bold'>
+										No 😈
+									</motion.button>
+									<button
+										onClick={handleYes}
+										className='px-6 w-full h-20 py-3 bg-pink-500 text-white rounded-2xl font-bold shadow-lg'>
+										Yes 💕
+									</button>
+								</div>
+							</div>
+						) : (
+							<motion.div
+								initial={{ scale: 0.6, opacity: 0 }}
+								animate={{ scale: 1, opacity: 1 }}
+								className='bg-white/90 p-12 rounded-3xl shadow-2xl text-center max-w-md'>
+								<h1 className='text-5xl font-extrabold text-pink-600 mb-4'>
+									Yayyyyy 💖🥹
+								</h1>
+								<p className='text-xl'>Best decision of your life 😌</p>
+							</motion.div>
+						)}
 					</motion.div>
 				)}
 			</AnimatePresence>
-
-			{/* Love Letter Overlay */}
-			<AnimatePresence>{accepted && <LoveLetter />}</AnimatePresence>
-		</main>
-	);
-}
-
-function LoveLetter() {
-	const [open, setOpen] = useState(false);
-
-	return (
-		<motion.div
-			initial={{ opacity: 0 }}
-			animate={{ opacity: 1 }}
-			exit={{ opacity: 0 }}
-			className='fixed inset-0 bg-black/40 backdrop-blur flex items-center justify-center z-50'>
-			<motion.div
-				initial={{ scale: 0.7 }}
-				animate={{ scale: 1 }}
-				className='bg-white rounded-3xl p-10 shadow-2xl text-center max-w-sm w-full'>
-				{!open ? (
-					<motion.div
-						whileHover={{ scale: 1.05 }}
-						whileTap={{ scale: 0.95 }}
-						onClick={() => setOpen(true)}
-						className='cursor-pointer'>
-						<div className='text-7xl'>💌</div>
-						<p className='mt-4 text-gray-600'>Tap to open your love letter</p>
-					</motion.div>
-				) : (
-					<motion.div
-						initial={{ scale: 0.6, opacity: 0 }}
-						animate={{ scale: 1, opacity: 1 }}>
-						<h2 className='text-3xl font-extrabold text-pink-600 mb-4'>
-							My Love 💖
-						</h2>
-						<p className='text-gray-700 leading-relaxed'>
-							I'm really happy you said yes 🥹💘
-							<br />
-							<br />
-							You make my world brighter, my days sweeter, and my heart lighter.
-							I can't wait to spend this Valentine and many more with you 😌✨
-						</p>
-						<div className='mt-6 text-4xl'>💖💍💖</div>
-					</motion.div>
-				)}
-			</motion.div>
-		</motion.div>
+		</div>
 	);
 }

@@ -7,6 +7,10 @@ import image_2 from '@/public/image/2.jpeg';
 import image_1 from '@/public/image/1.jpeg';
 import image_3 from '@/public/image/3.jpeg';
 import image_4 from '@/public/image/4.jpeg';
+import image_5 from '@/public/image/5.jpeg';
+import image_6 from '@/public/image/6.jpeg';
+import image_7 from '@/public/image/7.jpeg';
+import image_8 from '@/public/image/8.jpeg';
 const romantic = new URL('./sounds/romantic.mp3', import.meta.url).href;
 const yesSound = new URL('./sounds/Carry-Me-Dey-Go.mp3', import.meta.url).href;
 
@@ -36,16 +40,76 @@ const memeSounds = [
 ];
 
 const loveCards = [
-	{ image: image_1, text: 'I love your smile 😍' },
-	{ image: image_2, text: 'You inspire me everyday ✨' },
-	{ image: image_3, text: 'Your kindness melts my heart 🥹' },
-	{ image: image_4, text: 'You make my bad days better 💖' },
-	{ image: image_1, text: 'You are my safe place 🏡' },
-	{ image: image_2, text: 'Life feels easier with you ❤️' },
-	{ image: image_3, text: 'You understand me deeply 💫' },
-	{ image: image_4, text: 'You make me laugh endlessly 😂' },
-	{ image: image_1, text: 'You bring me peace 🕊️' },
-	{ image: image_2, text: 'You are my forever 💍' },
+	{
+		id: 1,
+		image: image_1,
+		text: 'I love your smile 😍',
+		longtext:
+			'Your smile brightens up my day and warms my heart like nothing else can. It’s the most beautiful sight in the world to me, and it never fails to make me feel loved and cherished.',
+	},
+	{
+		id: 2,
+		image: image_2,
+		text: 'You inspire me everyday ✨',
+		longtext:
+			'Your strength, kindness, and passion inspire me to be a better person every single day. I am in awe of your amazing qualities and feel so lucky to have you in my life.',
+	},
+	{
+		id: 3,
+		image: image_3,
+		text: 'Your kindness melts my heart 💖',
+		longtext:
+			'Your kindness and compassion make my heart feel warm and full of love. You have a way of making even the darkest days brighter just by being you.',
+	},
+	{
+		id: 4,
+		image: image_4,
+		text: 'You make my bad days better 💖',
+		longtext:
+			'Even on the worst days, your presence makes everything better. You have this incredible ability to turn my frown upside down and make me smile again.',
+	},
+	{
+		id: 5,
+		image: image_5,
+		text: 'You are my safe place 🏡',
+		longtext:
+			'In a world that can be chaotic and overwhelming, you are my safe haven. I feel secure and at peace whenever I am around you.',
+	},
+	{
+		id: 6,
+		image: image_6,
+		text: 'Life feels easier with you ❤️',
+		longtext:
+			'Having you in my life makes everything feel more manageable and joyful. You bring a sense of calm and happiness that I never knew I needed.',
+	},
+	{
+		id: 7,
+		image: image_7,
+		text: 'You understand me deeply 💫',
+		longtext:
+			'You see me for who I truly am – not just the surface level version of myself. Your understanding of my thoughts and feelings makes me feel truly seen and appreciated.',
+	},
+	{
+		id: 8,
+		image: image_8,
+		text: 'You make me laugh endlessly 😂',
+		longtext:
+			'Your humor and wit make me laugh until my sides hurt. You have this amazing ability to turn even the most boring moments into something fun and entertaining.',
+	},
+	{
+		id: 9,
+		image: image_1,
+		text: 'You bring me peace 🕊️',
+		longtext:
+			'In a world full of chaos and noise, you bring me a sense of peace and tranquility. Being around you makes my heart feel calm and my mind feel clear.',
+	},
+	{
+		id: 10,
+		image: image_2,
+		text: 'You are my forever 💍',
+		longtext:
+			'I want to spend every moment of my life with you. You are not just someone I love – you are the person I want to be with for the rest of my life.',
+	},
 ];
 
 export default function ValentinePage() {
@@ -162,12 +226,17 @@ export default function ValentinePage() {
 
 			{/* SOUND UNLOCK */}
 			{!soundEnabled && (
-				<div className='fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center'>
-					<button
-						onClick={enableSound}
-						className='px-12 py-6 bg-pink-500 text-white rounded-3xl text-2xl font-bold animate-pulse'>
-						💖 Tap to start 💖
-					</button>
+				<div className='fixed inset-0 z-[9999]  bg-black/80 flex flex-col items-center justify-center'>
+					<div className='bg-white p-6 w-[90%] text-center rounded-3xl shadow-lg'>
+						<h4 className='text-2xl text-black font-mono mb-4'>
+							💖 10 Reasons why I love you 💖
+						</h4>
+						<button
+							onClick={enableSound}
+							className='px-12 py-6 bg-pink-500 text-white rounded-3xl text-xl font-bold animate-pulse'>
+							💖 Tap to start 💖
+						</button>
+					</div>
 				</div>
 			)}
 
@@ -232,9 +301,17 @@ export default function ValentinePage() {
 						/>
 						<div className='absolute inset-0 bg-black/40' />
 
-						<h1 className='relative z-10 text-white text-4xl font-bold text-center px-6 drop-shadow-lg'>
-							{loveCards[step].text}
-						</h1>
+						<div className='relative z-10 bg-white w-[90%] rounded-sm text-slate-950  font-bold px-6 drop-shadow-lg p-4'>
+							<h2 className='text-xl w-full text-center'>
+								<span className='text-pink-500 text-xl text-center w-full block'>
+									#{loveCards[step].id}/10: {''}
+								</span>{' '}
+								{loveCards[step].text}
+							</h2>
+							<p className='text-md font-mono p-2 text-center w-full'>
+								{loveCards[step].longtext}
+							</p>
+						</div>
 
 						<div className='absolute bottom-30 text-white text-sm animate-bounce'>
 							⬆ Swipe up
@@ -263,7 +340,7 @@ export default function ValentinePage() {
 										onClick={moveNoButton}
 										style={{ left: pos.x, top: pos.y }}
 										animate={{ left: pos.x, top: pos.y }}
-										className='absolute w-1/2 h-20 px-6 py-3 bg-gray-300 rounded-2xl font-bold'>
+										className='absolute md:w-50 w-1/2 h-20 px-6 py-3 bg-gray-600 rounded-2xl font-bold'>
 										No 😈
 									</motion.button>
 									<button
@@ -272,6 +349,7 @@ export default function ValentinePage() {
 										Yes 💕
 									</button>
 								</div>
+								<p className='text-sm text-gray-600'>No is not an option 😈</p>
 							</div>
 						) : (
 							<motion.div

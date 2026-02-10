@@ -165,7 +165,7 @@ export default function ValentinePage() {
 							{loveCards[step].text}
 						</h1>
 
-						<div className='absolute bottom-10 text-white text-sm animate-bounce'>
+						<div className='absolute bottom-30 text-white text-sm animate-bounce'>
 							⬆ Swipe up
 						</div>
 					</motion.div>

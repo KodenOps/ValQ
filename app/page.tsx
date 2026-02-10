@@ -291,6 +291,11 @@ export default function ValentinePage() {
 									className='px-6 py-3 bg-pink-500 text-white rounded-2xl font-bold shadow-lg mt-4 hover:bg-pink-600 transition'>
 									Want to Reply? Send me a message! 💌
 								</button>
+								<button
+									className='px-6 py-3  text-black rounded-2xl font-medium  mt-4 transition'
+									onClick={() => window.location.reload()}>
+									Start All Over
+								</button>
 							</motion.div>
 						)}
 					</motion.div>

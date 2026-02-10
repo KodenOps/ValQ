@@ -207,10 +207,20 @@ export default function ValentinePage() {
 								initial={{ scale: 0.6, opacity: 0 }}
 								animate={{ scale: 1, opacity: 1 }}
 								className='bg-white/90 p-12 rounded-3xl shadow-2xl text-center max-w-md'>
-								<h1 className='text-5xl font-extrabold text-pink-600 mb-4'>
+								<h1 className='text-2xl font-extrabold text-pink-600 mb-4'>
 									Yayyyyy 💖🥹
 								</h1>
-								<p className='text-xl'>Best decision of your life 😌</p>
+								<p className='text-xl text-slate-950'>
+									I'm so happy you said yes! I promise to always make you smile
+									and fill your life with love. I can't wait to create beautiful
+									memories together. You are my everything, and I love you more
+									than words can express. Here's to us and our amazing journey
+									ahead! Cheers to unending love, laughter, and happily ever
+									after!
+								</p>
+								<button className='px-6 py-3 bg-pink-500 text-white rounded-2xl font-bold shadow-lg mt-4'>
+									Click to Reply
+								</button>
 							</motion.div>
 						)}
 					</motion.div>

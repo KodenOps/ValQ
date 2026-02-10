@@ -11,6 +11,7 @@ import image_5 from '@/public/image/5.jpeg';
 import image_6 from '@/public/image/6.jpeg';
 import image_7 from '@/public/image/7.jpeg';
 import image_8 from '@/public/image/8.jpeg';
+import que from '@/public/image/que.png';
 const romantic = new URL('./sounds/romantic.mp3', import.meta.url).href;
 const yesSound = new URL('./sounds/Carry-Me-Dey-Go.mp3', import.meta.url).href;
 
@@ -50,16 +51,16 @@ const loveCards = [
 	{
 		id: 2,
 		image: image_2,
-		text: 'You inspire me everyday ✨',
+		text: 'Your naughtiness keeps me on my toes 😏',
 		longtext:
-			'Your strength, kindness, and passion inspire me to be a better person every single day. I am in awe of your amazing qualities and feel so lucky to have you in my life.',
+			'I love your playful, mischievous side. The way you tease me and keep things exciting makes every moment with you thrilling and unpredictable in the best way.',
 	},
 	{
 		id: 3,
 		image: image_3,
-		text: 'Your kindness melts my heart 💖',
+		text: 'I love how freaky you are 😈',
 		longtext:
-			'Your kindness and compassion make my heart feel warm and full of love. You have a way of making even the darkest days brighter just by being you.',
+			"The way you let loose and show your wild side drives me absolutely crazy. You're not afraid to explore and be adventurous, and that passion between us is electric.",
 	},
 	{
 		id: 4,
@@ -85,16 +86,16 @@ const loveCards = [
 	{
 		id: 7,
 		image: image_7,
-		text: 'You understand me deeply 💫',
+		text: 'You are my greatest adventure 🗺️',
 		longtext:
-			'You see me for who I truly am – not just the surface level version of myself. Your understanding of my thoughts and feelings makes me feel truly seen and appreciated.',
+			"Every day with you is a new journey filled with love, laughter, and discovery. I can't wait to see where our adventure takes us next.",
 	},
 	{
 		id: 8,
 		image: image_8,
-		text: 'You make me laugh endlessly 😂',
+		text: 'You make ordinary moments magical ✨',
 		longtext:
-			'Your humor and wit make me laugh until my sides hurt. You have this amazing ability to turn even the most boring moments into something fun and entertaining.',
+			'With you, even the simplest activities become special memories. You have this gift of turning everyday moments into something extraordinary.',
 	},
 	{
 		id: 9,
@@ -112,10 +113,10 @@ const loveCards = [
 	},
 	{
 		id: '???',
-		image: image_2,
+		image: que,
 		text: 'One Quick Question... 💘',
 		longtext:
-			'Do you have any 50 billion naira to spare? Just kidding! But on a serious note, I have a very important question to ask you. 💖',
+			'Do you have any 50 billion naira you are not using...? Oh! Sorry, wrong slide. Keep swipping💖',
 	},
 ];
 
@@ -386,8 +387,8 @@ export default function ValentinePage() {
 								</p>
 								<button
 									onClick={openReplyModal}
-									className='px-6 py-3 bg-pink-500 text-white rounded-2xl font-bold shadow-lg mt-4 hover:bg-pink-600 transition'>
-									Want to Reply? Send me a message! 💌
+									className='px-6 py-3 bg-pink-500 text-white rounded-2xl font-bold shadow-lg mt-4 hover:bg-pink-600 transition capitalize'>
+									Send me your Response! 💌
 								</button>
 								<button
 									className='px-6 py-3  text-black rounded-2xl font-medium  mt-4 transition'

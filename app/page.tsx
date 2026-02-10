@@ -110,6 +110,13 @@ const loveCards = [
 		longtext:
 			'I want to spend every moment of my life with you. You are not just someone I love – you are the person I want to be with for the rest of my life.',
 	},
+	{
+		id: '???',
+		image: image_2,
+		text: 'One Quick Question... 💘',
+		longtext:
+			'Do you have any 50 billion naira to spare? Just kidding! But on a serious note, I have a very important question to ask you. 💖',
+	},
 ];
 
 export default function ValentinePage() {
@@ -143,7 +150,7 @@ export default function ValentinePage() {
 	}
 
 	function nextStep() {
-		setStep((s) => Math.min(s + 1, 10));
+		setStep((s) => Math.min(s + 1, 11));
 	}
 
 	function moveNoButton() {
@@ -282,7 +289,7 @@ export default function ValentinePage() {
 
 			<AnimatePresence mode='wait'>
 				{/* LOVE CARDS */}
-				{step < 10 && (
+				{step < 11 && (
 					<motion.div
 						key={step}
 						initial={{ y: '100%' }}
@@ -302,13 +309,23 @@ export default function ValentinePage() {
 						<div className='absolute inset-0 bg-black/40' />
 
 						<div className='relative z-10 bg-white w-[90%] rounded-sm text-slate-950  font-bold px-6 drop-shadow-lg p-4'>
-							<h2 className='text-xl w-full text-center'>
-								<span className='text-pink-500 text-xl text-center w-full block'>
-									#{loveCards[step].id}/10: {''}
-								</span>{' '}
-								{loveCards[step].text}
-							</h2>
-							<p className='text-md font-mono p-2 text-center w-full'>
+							{loveCards[step].id == '???' && (
+								<h2 className='text-xl w-full text-center'>
+									<span className='text-pink-500 text-xl text-center w-full block'>
+										#{loveCards[step].id} {''}
+									</span>{' '}
+									{loveCards[step].text}
+								</h2>
+							)}
+							{loveCards[step].id !== '???' && (
+								<h2 className='text-xl w-full text-center'>
+									<span className='text-pink-500 text-xl text-center w-full block'>
+										#{loveCards[step].id}/10: {''}
+									</span>{' '}
+									{loveCards[step].text}
+								</h2>
+							)}
+							<p className='text-md font-mono p-2 text-center w-full text-gray-600'>
 								{loveCards[step].longtext}
 							</p>
 						</div>
@@ -320,7 +337,7 @@ export default function ValentinePage() {
 				)}
 
 				{/* PROPOSAL */}
-				{step === 10 && (
+				{step === 11 && (
 					<motion.div
 						key='proposal'
 						initial={{ scale: 0.8, opacity: 0 }}

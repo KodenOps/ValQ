@@ -3,7 +3,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Confetti from 'react-confetti';
-import image_1 from '@/public/image/2.jpg';
+import image_2 from '@/public/image/2.jpeg';
+import image_1 from '@/public/image/1.jpeg';
+import image_3 from '@/public/image/3.jpeg';
+import image_4 from '@/public/image/4.jpeg';
 const romantic = new URL('./sounds/romantic.mp3', import.meta.url).href;
 const yesSound = new URL('./sounds/Carry-Me-Dey-Go.mp3', import.meta.url).href;
 
@@ -34,15 +37,15 @@ const memeSounds = [
 
 const loveCards = [
 	{ image: image_1, text: 'I love your smile 😍' },
-	{ image: image_1, text: 'You inspire me everyday ✨' },
-	{ image: image_1, text: 'Your kindness melts my heart 🥹' },
-	{ image: image_1, text: 'You make my bad days better 💖' },
+	{ image: image_2, text: 'You inspire me everyday ✨' },
+	{ image: image_3, text: 'Your kindness melts my heart 🥹' },
+	{ image: image_4, text: 'You make my bad days better 💖' },
 	{ image: image_1, text: 'You are my safe place 🏡' },
-	{ image: image_1, text: 'Life feels easier with you ❤️' },
-	{ image: image_1, text: 'You understand me deeply 💫' },
-	{ image: image_1, text: 'You make me laugh endlessly 😂' },
+	{ image: image_2, text: 'Life feels easier with you ❤️' },
+	{ image: image_3, text: 'You understand me deeply 💫' },
+	{ image: image_4, text: 'You make me laugh endlessly 😂' },
 	{ image: image_1, text: 'You bring me peace 🕊️' },
-	{ image: image_1, text: 'You are my forever 💍' },
+	{ image: image_2, text: 'You are my forever 💍' },
 ];
 
 export default function ValentinePage() {

@@ -12,8 +12,8 @@ import image_6 from '@/public/image/6.jpeg';
 import image_7 from '@/public/image/7.jpeg';
 import image_8 from '@/public/image/8.jpeg';
 import que from '@/public/image/que.png';
-const romantic = new URL('./sounds/romantic.mp3', import.meta.url).href;
-const yesSound = new URL('./sounds/Carry-Me-Dey-Go.mp3', import.meta.url).href;
+const romantic = new URL('./sounds/romanticj.mp3', import.meta.url).href;
+const yesSound = new URL('./sounds/romantic.mp3', import.meta.url).href;
 
 const memeSounds = [
 	new URL('./sounds/you-think-say-you-dey-wise.mp3', import.meta.url).href,

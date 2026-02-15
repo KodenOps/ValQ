@@ -309,7 +309,7 @@ export default function ValentinePage() {
 						/>
 						<div className='absolute inset-0 bg-black/40' />
 
-						<div className='relative z-10 mb-12 bg-white w-[90%] rounded-sm text-slate-950  font-bold px-6 drop-shadow-lg p-4'>
+						<div className='relative z-10 mb-20 bg-white w-[90%] rounded-sm text-slate-950  font-bold px-6 drop-shadow-lg p-4'>
 							{loveCards[step].id == '???' && (
 								<h2 className='text-xl w-full text-center'>
 									<span className='text-pink-500 text-xl text-center w-full block'>

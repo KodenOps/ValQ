@@ -302,14 +302,14 @@ export default function ValentinePage() {
 						onDragEnd={(e, info) => {
 							if (info.offset.y < -120) nextStep();
 						}}
-						className='absolute inset-0 flex items-center justify-center'>
+						className='absolute inset-0 flex items-end justify-center'>
 						<div
 							className='absolute inset-0 object-cover bg-cover bg-center'
 							style={{ backgroundImage: `url(${loveCards[step].image.src})` }}
 						/>
 						<div className='absolute inset-0 bg-black/40' />
 
-						<div className='relative z-10 bg-white w-[90%] rounded-sm text-slate-950  font-bold px-6 drop-shadow-lg p-4'>
+						<div className='relative z-10 mb-6 bg-white w-[90%] rounded-sm text-slate-950  font-bold px-6 drop-shadow-lg p-4'>
 							{loveCards[step].id == '???' && (
 								<h2 className='text-xl w-full text-center'>
 									<span className='text-pink-500 text-xl text-center w-full block'>
@@ -331,7 +331,7 @@ export default function ValentinePage() {
 							</p>
 						</div>
 
-						<div className='absolute bottom-30 text-white text-sm animate-bounce'>
+						<div className='absolute top-30 text-white text-sm animate-bounce'>
 							⬆ Swipe up
 						</div>
 					</motion.div>
